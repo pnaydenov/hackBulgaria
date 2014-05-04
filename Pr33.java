@@ -1,51 +1,49 @@
 
 class magic_square_class {
 	
-	boolean magic_square(int[][] a) {
-		System.out.println("Мagic square?"); //$NON-NLS-1$
+	boolean magic_square(int[][] array_square) {
 		
-		for (int i = 0; i < a.length; i++) {
-			for (int j = 0; j < a[i].length; j++) {
-				System.out.print(a[i][j] + " "); //$NON-NLS-1$
+		System.out.println("Мagic square?"); //$NON-NLS-1$
+		for (int i = 0; i < array_square.length; i++) {
+			for (int j = 0; j < array_square[i].length; j++) {
+				System.out.print(array_square[i][j] + " "); //$NON-NLS-1$
 			}
 			System.out.println();
 		}
-	
-		
-		int n = a.length*2+2; 
-		int[] x = new int[n]; //Масив в който се събира сумата за всеки ред, колона, диагонал в отделна клетка
-		for (int i = 0; i < n; i++) { // Запълваме масива с 0, за да извършим събиранията по редове, колони и диагонали
-			x[i] = 0;
-			}
-		
-		for (int i = 0; i < a.length; i++) {
-			x[(n-2)] += a[i][i]; // В предпоследната клетка от масива х задаваме диагоанал [i][i] (00, 11, 22)
-			x[(n-1)] += a[(a.length-1-i)][i]; // В последната клетка от масива х задаваме другия диагонал (20, 11, 02) 
 			
-			for (int j = 0; j < a[i].length; j++) {
-				x[i] += a[i][j];
-				x[(a.length + i)] += a[j][i];
+		int n = array_square.length*2+2; // n е сумата от броя на редовете + колоните + двата диагонала на даден квадрат 
+		int[] n_array = new int[n]; //Масив в който се събира сумата за всеки ред, колона, диагонал в отделна клетка
+		
+		for (int i = 0; i < n; i++) { // Запълваме масива с 0, за да извършим събиранията по редове, колони и диагонали
+			n_array[i] = 0;
+			}
+
+		for (int i = 0; i < array_square.length; i++) {
+			n_array[(n-2)] += array_square[i][i]; // В предпоследната клетка от масива n_array задаваме диагоанал [i][i] 
+			n_array[(n-1)] += array_square[(array_square.length-1-i)][i]; // В последната клетка от масива n_array задаваме другия диагонал 
+			
+			for (int j = 0; j < array_square[i].length; j++) {
+				n_array[i] += array_square[i][j]; // Първата част от масива n_array запълваме със сумата от клетките на даден i ред
+				n_array[(array_square[i].length + i)] += array_square[j][i]; // В масива n_array от n_array[a.length+0] запълваме със сумата от клетките на дадена a.length колона
 			}
 		}
 
 	 	for (int i=0; i < n-1; i++) {
-	 		if (x[i] != x[i+1]) {
+	 		if (n_array[i] != n_array[i+1]) { //Определяме дали е вярно, че дадените стойности образуват магически квадрат
 	 			return false;
 	 		}
 	 	}
-	 		 	
-	 	return true;
+	 	return true; // Наистина е магически квадрат
 			
 	}
 }
 
 
 public class Pr33 {
-
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		
+			
 			int[][] m1 = new int[][]{
 					{1, 2, 3},
 					{4, 5, 6},
@@ -75,10 +73,8 @@ public class Pr33 {
 					{17, 16, 15}
 			};
 			
-			
-						
-
 			magic_square_class msc = new magic_square_class();
+			
 			System.out.println(msc.magic_square(m1));
 			System.out.println(msc.magic_square(m2));
 			System.out.println(msc.magic_square(m3));
